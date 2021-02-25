@@ -1,0 +1,5 @@
+falco:
+  jsonOutput: true
+  httpOutput:
+    enabled: true
+    url: http://gateway.openfaas:8080/function/dispatch-fn

@@ -1,0 +1,14 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://79435efe-2dac-403d-bfd2-f6644988830a.k8s.civo.com:31112
+functions:
+  notifier-fn:
+    lang: golang-middleware
+    handler: ./notifier-fn
+    image: devopps/notifier-fn:latest
+    environment:
+      SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+    build_args:
+      GO111MODULE: on
+

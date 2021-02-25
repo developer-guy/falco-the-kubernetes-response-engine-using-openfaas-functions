@@ -1,0 +1,10 @@
+template
+build
+.idea
+<<<<<<< HEAD
+.envrc
+kubeconfig
+=======
+kubeconfig
+.envrc
+>>>>>>> aee66b9 (initial commit)

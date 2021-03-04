@@ -1,4 +1,9 @@
-![openfaas_introduction](.res/civo.png)
+<p align="center"> <img src="/.res/civo.png" height="400" width="400"/> </p>
+
+[![OpenFaaS](https://img.shields.io/badge/openfaas-blue.svg)](https://www.openfaas.com)
+[![k3s](https://img.shields.io/badge/k3s-yellow.svg)](https://k3s.io)
+[![Falco](https://img.shields.io/badge/falco-informational.svg)](https://falco.org)
+[![CIVO](https://img.shields.io/badge/civo-blue.svg)](https://www.civo.com/kube100)
 
 # Kubernetes Response Engine powered by OpenFaaS
 
@@ -7,12 +12,31 @@ afterwards, it does not have any _remediation_ system. This is why we need somet
 It simply aims to catch alerts and take actions on it. These actions can be designed as _fine-grained_ serverless
 functions.
 
+Think of a scenario you want to take action to your alerts that being notified by Falco, but the important thing that we should notice here is we are going to do different things for the different levels of alerts. For example, we are going to send the notification for notice level alert but for the warning level alert we are going to delete the pod, the overall architecture will be like this:
+```bash
+                +-----------+
+                |   Falco   +
+                +-----^-----+
+                      |
+              +-------v-------+
+              >   OpenFaaS    +
+              +-------v-------+
++-----------+         |          +-----------+
+| notify-fn <---------+----------> delete-fn |
++-----v-----+ notice     warning +-----+-----+
+      |                                |
+      | send alert          delete pod |
+      |                                |
++-----v-----+                    +-----v-----+       
+|   Slack   |                    | Pwned Pod |
++-----------+                    +-----------+
+```
+
 🎁 Table of Contents
 =================
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- ⛺ [Overall Architecture](#overall-architecture)
 - 🧰 [Prerequisites](#prerequisites)
 - 🎯 [Target Audience](#target-audience)
 - 🎁 [What is ...?](#what-is-)
@@ -23,27 +47,6 @@ functions.
 -  👨‍💻[Hands-on Demonstration](#hands-on-demonstration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Overall Architecture
-
-```bash
-                                              +-----------+
-                                              |   Falco   +
-                                              +-----^-----+
-                                                    |
-                                            +-------v-------+
-                                            >   OpenFaaS    +
-                                            +-------v-------+
-                              +-----------+         |          +-----------+
-                              | notify-fn <---------+----------> delete-fn |
-                              +-----v-----+ notice     warning +-----+-----+
-                                    |                                |
-                                    | send alert          delete pod |
-                                    |                                |
-                              +-----v-----+                    +-----v-----+       
-                              |   Slack   |                    | Pwned Pod |
-                              +-----------+                    +-----------+
-   ```
 
 # Prerequisites
 

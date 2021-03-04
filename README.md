@@ -19,7 +19,7 @@ functions.
     - <img src="https://www.civo.com/brand-assets/logo/full-colour/civo-logo-fullcolour.svg" height="16" width="16"/>[CIVO](#civo)
     - <img src="https://cncf-branding.netlify.app/img/projects/k3s/icon/color/k3s-icon-color.svg" height="16" width="16"/>[K3S](#k3s)
     - <img src="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.svg" height="16" width="16"/>[Falco](#falco)
-    - <img src="/.res/openfaas.svg"/>[OpenFaaS](#openfaas)
+    - <img src="/.res/openfaas.svg" height="16" width="16"/>[OpenFaaS](#openfaas)
 -  👨‍💻[Hands-on Demonstration](#hands-on-demonstration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -49,7 +49,7 @@ functions.
 
 * <img src="https://www.civo.com/brand-assets/logo/full-colour/civo-logo-fullcolour.svg" height="16" width="16"/> civo cli v0.7.6
 * <img src="https://cncf-branding.netlify.app/img/projects/helm/horizontal/color/helm-horizontal-color.svg" height="16" width="16" /> Helm v3.5.1
-* <img src="/.res/openfaas.svg"/> faas-cli
+* <img src="/.res/openfaas.svg" height="16" width="16"/> faas-cli
 * <img src="https://raw.githubusercontent.com/cncf/artwork/master/other/illustrations/ashley-mcnamara/kubectl/kubectl.svg" height="16" width="16"/> kubectl v1.20.2
 
 > We are going to do this demo on macOS Catalina 1.15.7, you can find the prerequisites on [brew](https://brew.sh).

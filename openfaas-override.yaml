@@ -1,0 +1,5 @@
+functionNamespace: openfaas-fn
+generateBasicAuth: false
+openfaasPRO: false
+basic_auth: false
+

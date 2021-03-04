@@ -7,49 +7,49 @@ afterwards, it does not have any _remediation_ system. This is why we need somet
 It simply aims to catch alerts and take actions on it. These actions can be designed as _fine-grained_ serverless
 functions.
 
-Table of Contents
+🎁 Table of Contents
 =================
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Overall Architecture](#overall-architecture)
-- [Prerequisites](#prerequisites)
-- [Target Audience](#target-audience)
-- [What is ...?](#what-is-)
-    - [CIVO](#civo)
-    - [K3S](#k3s)
-    - [Falco](#falco)
-    - [OpenFaaS](#openfaas)
-- [Hands-on Demonstration](#hands-on-demonstration)
+- ⛺ [Overall Architecture](#overall-architecture)
+- 🧰 [Prerequisites](#prerequisites)
+- 🎯 [Target Audience](#target-audience)
+- 🎁 [What is ...?](#what-is-)
+    - <img src="https://www.civo.com/brand-assets/logo/full-colour/civo-logo-fullcolour.svg" height="16" width="16"/>[CIVO](#civo)
+    - <img src="https://cncf-branding.netlify.app/img/projects/k3s/icon/color/k3s-icon-color.svg" height="16" width="16"/>[K3S](#k3s)
+    - <img src="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.svg" height="16" width="16"/>[Falco](#falco)
+    - <img src="/res/openfaas.svg" height="16" width="16"/>[OpenFaaS](#openfaas)
+-  👨‍💻[Hands-on Demonstration](#hands-on-demonstration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Overall Architecture
 
 ```bash
-                +-----------+
-                |   Falco   +
-                +-----^-----+
-                      |
-              +-------v-------+
-              >   OpenFaaS    +
-              +-------v-------+
-+-----------+         |          +-----------+
-| notify-fn <---------+----------> delete-fn |
-+-----v-----+ notice     warning +-----+-----+
-      |                                |
-      | send alert          delete pod |
-      |                                |
-+-----v-----+                    +-----v-----+       
-|   Slack   |                    | Pwned Pod |
-+-----------+                    +-----------+
-```
+                                              +-----------+
+                                              |   Falco   +
+                                              +-----^-----+
+                                                    |
+                                            +-------v-------+
+                                            >   OpenFaaS    +
+                                            +-------v-------+
+                              +-----------+         |          +-----------+
+                              | notify-fn <---------+----------> delete-fn |
+                              +-----v-----+ notice     warning +-----+-----+
+                                    |                                |
+                                    | send alert          delete pod |
+                                    |                                |
+                              +-----v-----+                    +-----v-----+       
+                              |   Slack   |                    | Pwned Pod |
+                              +-----------+                    +-----------+
+   ```
 
 # Prerequisites
 
 * <img src="https://www.civo.com/brand-assets/logo/full-colour/civo-logo-fullcolour.svg" height="16" width="16"/> civo cli v0.7.6
 * <img src="https://cncf-branding.netlify.app/img/projects/helm/horizontal/color/helm-horizontal-color.svg" height="16" width="16" /> Helm v3.5.1
-* <img src="https://github.com/openfaas/openfaas.github.io/blob/master/images/openfaas/logo.svg" height="16" width="16"/> faas-cli
+* <img src="/.res/openfaas.svg" height="16" width="16"/> faas-cli
 * <img src="https://raw.githubusercontent.com/cncf/artwork/master/other/illustrations/ashley-mcnamara/kubectl/kubectl.svg" height="16" width="16"/> kubectl v1.20.2
 
 > We are going to do this demo on macOS Catalina 1.15.7, you can find the prerequisites on [brew](https://brew.sh).
@@ -210,7 +210,7 @@ k3s-playground-66b18d51-node-04ed     Ready    <none>                 40h   v1.2
 
 You can find more details about **civo cli** [here](https://github.com/civo/cli).
 
-* Set up OpenFaaS using Helm
+* Set up OpenFaaS
 
 ```bash
 $ helm upgrade openfaas --install openfaas/openfaas \
@@ -229,7 +229,7 @@ To verify that openfaas has started, run:
   kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
 ```
 
-* Set up Falco using Helm
+* Set up Falco
 
 ```bash
 $ helm upgrade falco --install falcosecurity/falco \

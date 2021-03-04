@@ -311,8 +311,8 @@ that shows this.
 ![falco_alerts](.res/falco_alerts.png)
 
 The next thing that we need to do this, we should create an alert at _Warning_ level, in order to that, we need to
-create a Pod based on the alpine image, and we should connect to it, and access some important folders like _
-/etc/shadow_. Once we do this, we should notice that our Pod gets killed by the _delete-pod-fn_ function.
+create a Pod based on the alpine image, and we should connect to it, and access some important folders like 
+_/etc/shadow_. Once we do this, we should notice that our Pod gets killed by the _delete-pod-fn_ function.
 
 Let's test it with creating a Pod.
 

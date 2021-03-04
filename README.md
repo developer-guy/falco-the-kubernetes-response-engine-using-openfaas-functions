@@ -87,6 +87,18 @@ credit to test-drive the world’s first K3s-powered, managed Kubernetes service
 
 > Launch clusters with preinstalled applications, or install on the fly with our Kubernetes marketplace.
 
+* Bandwidth Pooling
+
+> Use all your bandwidth allowance across all your Civo services. Only pay for what you use.
+
+* Marketplace
+
+> Install applications quickly and easily to your clusters during or after set up with our marketplace.
+
+* Custom Firewalls
+
+> Configure custom firewalls from your Civo dashboard using OpenStack’s security groups.
+
 ## [K3S](https://k3s.io/)
 
 _The certified Kubernetes distribution built for IoT & Edge computing_

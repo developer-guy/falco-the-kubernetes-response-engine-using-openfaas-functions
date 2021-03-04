@@ -44,7 +44,7 @@ Think of a scenario you want to take action to your alerts that being notified b
     - <img src="https://cncf-branding.netlify.app/img/projects/k3s/icon/color/k3s-icon-color.svg" height="16" width="16"/>[K3S](#k3s)
     - <img src="https://cncf-branding.netlify.app/img/projects/falco/icon/color/falco-icon-color.svg" height="16" width="16"/>[Falco](#falco)
     - <img src="/.res/openfaas.svg" height="16" width="16"/>[OpenFaaS](#openfaas)
--  👨‍💻[Hands-on Demonstration](#hands-on-demonstration)
+-  👨‍💻 [Hands-on Demonstration](#hands-on-demonstration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

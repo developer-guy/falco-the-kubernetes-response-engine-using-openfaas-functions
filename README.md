@@ -75,17 +75,17 @@ _Built for speed and simplicity, with K3s under the hood_
 **Join the [#Kube100](https://www.civo.com/kube100) beta: [Apply to join today](https://www.civo.com/signup) _(Get free
 credit to test-drive the world’s first K3s-powered, managed Kubernetes service)_**
 
-* Fast, but powerful
+* Simple, fast and powerful
 
 > Spin up Kubernetes in under 2 minutes, without the bloat, using the lightweight K3s distribution
 
 * Management CLI
 
-> Manage your clusters with our custom-built CLI. Streamline deploys with our clean REST API.
+> Manage your clusters with the custom-built CLI and streamline your deployment with simple REST API.
 
 * Application marketplace
 
-> Launch clusters with preinstalled applications, or install on the fly with our Kubernetes marketplace.
+> Launch clusters with preinstalled applications, or install on the fly using Civo's Kubernetes marketplace. 
 
 * Bandwidth Pooling
 
@@ -93,7 +93,7 @@ credit to test-drive the world’s first K3s-powered, managed Kubernetes service
 
 * Marketplace
 
-> Install applications quickly and easily to your clusters during or after set up with our marketplace.
+> Install applications quickly and easily to your clusters during or after set up with Civo marketplace. Also you can contribute an application to [marketplace](https://github.com/civo/kubernetes-marketplace) 
 
 * Custom Firewalls
 

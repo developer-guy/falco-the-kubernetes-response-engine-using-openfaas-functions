@@ -151,7 +151,8 @@ _OpenFaaS® makes it simple to deploy both functions and existing code to Kubern
 
 ## Create CIVO Playground
 
-* Save an API Key on [Security Dashboard](https://www.civo.com/account/security)
+* Download the civo cli from [here](https://github.com/civo/cli#set-up) 
+* Copy and save the API key from your Civo account -  [Security Dashboard](https://www.civo.com/account/security)
 
 ![civo_dashboard_settings](.res/civo-settings.png)
 
@@ -227,6 +228,11 @@ You can find more details about **civo cli** [here](https://github.com/civo/cli)
 
 * Set up OpenFaaS
 
+You can install OpenFaaS from Civo marketplace - 
+![](.res/openfaas.png)
+
+or via helm 
+
 ```bash
 $ helm upgrade openfaas --install openfaas/openfaas \
     --namespace openfaas --create-namespace \
@@ -275,13 +281,13 @@ You can enable its deployment with `--set falcosidekick.enabled=true` or in your
 See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml for configuration values.
 ```
 
-After everyting is ok, we should configure our faas-cli to be able deploy functions.
+After everyting is ok, configure the faas-cli in order to deploy functions.
 
 ```bash
 export OPENFAAS_URL="http://79435efe-2dac-403d-bfd2-f6644988830a.k8s.civo.com:31112"
 ```
 
-Let's see what functions that we have.
+Let's see what functions present.
 
 ```bash
 $ faas-cli list
@@ -292,7 +298,7 @@ You should see nothing.
 
 > NOTE: Don't forget to change Docker ID in the function's description files.
 
-Let's deploy our functions.
+Now Deploy the functions.
 
 ```bash
 $ faas-cli up -f dispatch-fn.yml
@@ -325,9 +331,9 @@ that shows this.
 
 ![falco_alerts](.res/falco_alerts.png)
 
-The next thing that we need to do this, we should create an alert at _Warning_ level, in order to that, we need to
-create a Pod based on the alpine image, and we should connect to it, and access some important folders like 
-_/etc/shadow_. Once we do this, we should notice that our Pod gets killed by the _delete-pod-fn_ function.
+The next thing that you need to do this, you should create an alert at _Warning_ level, in order to that, you need to
+create a Pod based on the alpine image, and you should connect to it, and access some important folders like 
+_/etc/shadow_. Once this is done, you should notice that the Pod gets killed by the _delete-pod-fn_ function.
 
 Let's test it with creating a Pod.
 

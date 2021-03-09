@@ -234,6 +234,8 @@ You can install OpenFaaS from Civo marketplace -
 or via helm 
 
 ```bash
+$ helm repo add openfaas https://openfaas.github.io/faas-netes/
+$ kubectl create namespace openfaas-fn
 $ helm upgrade openfaas --install openfaas/openfaas \
     --namespace openfaas --create-namespace \
     -f openfaas-override.yaml
@@ -253,6 +255,7 @@ To verify that openfaas has started, run:
 * Set up Falco
 
 ```bash
+$ helm repo add falcosecurity https://falcosecurity.github.io/charts
 $ helm upgrade falco --install falcosecurity/falco \
 --namespace falco --create-namespace \
 -f override.yaml

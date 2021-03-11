@@ -52,7 +52,8 @@ Think of a scenario you want to take action to your alerts that being notified b
 
 * <img src="https://www.civo.com/brand-assets/logo/full-colour/civo-logo-fullcolour.svg" height="16" width="16"/> civo cli v0.7.6
 * <img src="https://cncf-branding.netlify.app/img/projects/helm/horizontal/color/helm-horizontal-color.svg" height="16" width="16" /> Helm v3.5.1
-* <img src="/.res/openfaas.svg" height="16" width="16"/> faas-cli
+* <img src="/.res/openfaas.svg" height="16" width="16"/> faas-cli 0.13.6
+* <img src="/.res/openfaas.svg" height="16" width="16"/> arkade 0.7.9
 * <img src="https://raw.githubusercontent.com/cncf/artwork/master/other/illustrations/ashley-mcnamara/kubectl/kubectl.svg" height="16" width="16"/> kubectl v1.20.2
 
 > We are going to do this demo on macOS Catalina 1.15.7, you can find the prerequisites on [brew](https://brew.sh).
@@ -231,17 +232,32 @@ You can find more details about **civo cli** [here](https://github.com/civo/cli)
 You can install OpenFaaS from Civo marketplace - 
 ![](.res/openfaas.png)
 
-or via helm 
+or via [arkade](https://github.com/alexellis/arkade)
+
+_arkade_ provides a portable marketplace for downloading your favourite devops CLIs and installing helm charts, with a single command. You can also download CLIs like kubectl, kind, kubectx and helm faster than you can type "apt-get/brew update"
 
 ```bash
-$ helm repo add openfaas https://openfaas.github.io/faas-netes/
-$ kubectl create namespace openfaas-fn
-$ helm upgrade openfaas --install openfaas/openfaas \
-    --namespace openfaas --create-namespace \
-    -f openfaas-override.yaml
+$ arkade install openfaas
+Using Kubeconfig: /Users/batuhan.apaydin/.kube/config
+Using Kubeconfig: /Users/batuhan.apaydin/.kube/config
+Client: x86_64, Darwin
+2021/03/11 21:35:24 User dir established as: /Users/batuhan.apaydin/.arkade/
+"openfaas" already exists with the same configuration, skipping
+
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "nats" chart repository
+...Successfully got an update from the "kyverno" chart repository
+...Successfully got an update from the "dq-helm-charts" chart repository
+...Successfully got an update from the "falcosecurity" chart repository
+...Successfully got an update from the "openfaas" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈Happy Helming!⎈
+
+VALUES values.yaml
+Command: /Users/batuhan.apaydin/.arkade/bin/helm [upgrade --install openfaas openfaas/openfaas --namespace openfaas --values /var/folders/pf/6h9t0mnd4d342ncgpjq_3zl80000gp/T/charts/openfaas/values.yaml --set basicAuthPlugin.replicas=1 --set basic_auth=true --set clusterRole=false --set gateway.directFunctions=false --set openfaasImagePullPolicy=IfNotPresent --set faasnetes.imagePullPolicy=Always --set queueWorker.maxInflight=1 --set serviceType=NodePort --set operator.create=false --set gateway.replicas=1 --set ingressOperator.create=false --set queueWorker.replicas=1]
 Release "openfaas" does not exist. Installing it now.
 NAME: openfaas
-LAST DEPLOYED: Thu Mar  4 14:28:32 2021
+LAST DEPLOYED: Thu Mar 11 21:35:30 2021
 NAMESPACE: openfaas
 STATUS: deployed
 REVISION: 1
@@ -250,7 +266,38 @@ NOTES:
 To verify that openfaas has started, run:
 
   kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
+=======================================================================
+= OpenFaaS has been installed.                                        =
+=======================================================================
+
+# Get the faas-cli
+curl -SLsf https://cli.openfaas.com | sudo sh
+
+# Forward the gateway to your machine
+kubectl rollout status -n openfaas deploy/gateway
+kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+
+# If basic auth is enabled, you can now log into your gateway:
+PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+echo -n $PASSWORD | faas-cli login --username admin --password-stdin
+
+faas-cli store deploy figlet
+faas-cli list
+
+# For Raspberry Pi
+faas-cli store list \
+ --platform armhf
+
+faas-cli store deploy figlet \
+ --platform armhf
+
+# Find out more at:
+# https://github.com/openfaas/faas
+
+Thanks for using arkade!
 ```
+
+>Also, there are other ways to install OpenFaaS, here is the [official documentation.](https://docs.openfaas.com/deployment/kubernetes/#deployment-guide-for-kubernetes)
 
 * Set up Falco
 

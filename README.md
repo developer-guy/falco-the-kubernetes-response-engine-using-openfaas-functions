@@ -351,6 +351,8 @@ You should see nothing.
 Now Deploy the functions.
 
 ```bash
+$ faas-cli template store pull golang-http
+$ faas-cli template store pull golang-middleware
 $ faas-cli up -f dispatch-fn.yml
 $ faas-cli up -f notifier-fn.yml
 $ faas-cli up -f delete-pod-fn.yml

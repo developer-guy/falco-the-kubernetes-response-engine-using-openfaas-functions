@@ -19,7 +19,7 @@ Think of a scenario you want to take action to your alerts that being notified b
                 +-----^-----+
                       |
               +-------v-------+
-              >   OpenFaaS    +
+              >OpenFaaS (dispatch-fn)+
               +-------v-------+
 +-----------+         |          +-----------+
 | notify-fn <---------+----------> delete-fn |
@@ -334,7 +334,7 @@ See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.ya
 After everyting is ok, configure the faas-cli in order to deploy functions.
 
 ```bash
-export OPENFAAS_URL="http://79435efe-2dac-403d-bfd2-f6644988830a.k8s.civo.com:31112"
+$ kubectl --namespace=openfaas port-forward svc/gateway 8080
 ```
 
 Let's see what functions present.
@@ -351,8 +351,6 @@ You should see nothing.
 Now Deploy the functions.
 
 ```bash
-$ faas-cli template store pull golang-http
-$ faas-cli template store pull golang-middleware
 $ faas-cli deploy -f stack.yml
 ...
 ```

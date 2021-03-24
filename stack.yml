@@ -1,0 +1,31 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://localhost:8080
+functions:
+  delete-pod-fn:
+    lang: golang-middleware
+    handler: ./delete-pod-fn
+    image: devopps/delete-pod-fn:latest
+    annotations:
+      com.openfaas.serviceaccount: delete-pod-fn
+    build_args:
+      GO111MODULE: on
+  notifier-fn:
+    lang: golang-middleware
+    handler: ./notifier-fn
+    image: devopps/notifier-fn:latest
+    environment:
+      SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+    build_args:
+      GO111MODULE: on
+  dispatch-fn:
+    lang: golang-http
+    handler: ./dispatch-fn
+    image: devopps/dispatch-fn:latest
+configuration:
+  templates:
+    - name: golang-http
+      source: https://github.com/openfaas/golang-http-template
+    - name: golang-middleware
+      source: https://github.com/openfaas/golang-http-template

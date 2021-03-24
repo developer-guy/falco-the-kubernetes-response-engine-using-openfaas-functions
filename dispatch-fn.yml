@@ -1,9 +1,0 @@
-version: 1.0
-provider:
-  name: openfaas
-  gateway: http://79435efe-2dac-403d-bfd2-f6644988830a.k8s.civo.com:31112
-functions:
-  dispatch-fn:
-    lang: golang-http
-    handler: ./dispatch-fn
-    image: devopps/dispatch-fn:latest

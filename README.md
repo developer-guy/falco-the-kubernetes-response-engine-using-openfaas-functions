@@ -52,8 +52,8 @@ Think of a scenario you want to take action to your alerts that being notified b
 
 * <img src="https://www.civo.com/brand-assets/logo/full-colour/civo-logo-fullcolour.svg" height="16" width="16"/> civo cli v0.7.6
 * <img src="https://cncf-branding.netlify.app/img/projects/helm/horizontal/color/helm-horizontal-color.svg" height="16" width="16" /> Helm v3.5.1
-* <img src="/.res/openfaas.svg" height="16" width="16"/> faas-cli 0.13.6
-* <img src="/.res/openfaas.svg" height="16" width="16"/> arkade 0.7.9
+* <img src="/.res/openfaas.svg" height="16" width="16"/> faas-cli 0.13.9
+* <img src="/.res/openfaas.svg" height="16" width="16"/> arkade 0.7.10
 * <img src="https://raw.githubusercontent.com/cncf/artwork/master/other/illustrations/ashley-mcnamara/kubectl/kubectl.svg" height="16" width="16"/> kubectl v1.20.2
 
 > We are going to do this demo on macOS Catalina 1.15.7, you can find the prerequisites on [brew](https://brew.sh).
@@ -302,39 +302,22 @@ Thanks for using arkade!
 * Set up Falco
 
 ```bash
-$ helm repo add falcosecurity https://falcosecurity.github.io/charts
-$ helm upgrade falco --install falcosecurity/falco \
---namespace falco --create-namespace \
--f override.yaml
-WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: ./kubeconfig
-WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: ./kubeconfig
-Release "falco" does not exist. Installing it now.
-NAME: falco
-LAST DEPLOYED: Thu Mar  4 14:34:54 2021
-NAMESPACE: falco
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
-NOTES:
-Falco agents are spinning up on each node in your cluster. After a few
-seconds, they are going to start monitoring your containers looking for
-security issues.
-
-
-No further action should be required.
-
-
-Tip:
-You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick.
-Full list of outputs: https://github.com/falcosecurity/charts/falcosidekick.
-You can enable its deployment with `--set falcosidekick.enabled=true` or in your values.yaml.
-See: https://github.com/falcosecurity/charts/blob/master/falcosidekick/values.yaml for configuration values.
+$ arkade install falco \
+        --set falco.jsonOutput=true \
+        --set falco.httpOutput.enabled=true \
+        --set falco.httpOutput.url=http://gateway.openfaas:8080/function/dispatch-fn
+...
 ```
 
 After everyting is ok, configure the faas-cli in order to deploy functions.
 
 ```bash
-$ kubectl --namespace=openfaas port-forward svc/gateway 8080
+# Forward the gateway to your machine
+$ kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+
+# If basic auth is enabled, you can now log into your gateway:
+$ PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+$ echo -n $PASSWORD | faas-cli login --username admin --password-stdin
 ```
 
 Let's see what functions present.
@@ -346,11 +329,13 @@ Function                        Invocations     Replicas
 
 You should see nothing.
 
-> NOTE: Don't forget to change Docker ID in the function's description files.
+> NOTE: Don't forget to apply [roles.yaml](./roles.yaml) for delete-pod-fn because this function will remove the pod if necessarry,
+> so, it needs some priviliges for that.
 
 Now Deploy the functions.
 
 ```bash
+$ kubectl apply -f roles.yaml
 $ faas-cli deploy -f stack.yml
 ...
 ```
